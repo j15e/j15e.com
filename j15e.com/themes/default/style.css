@@ -1,0 +1,327 @@
+@charset "UTF-8";
+
+/* ****************************************************
+
+	@file:		  style.css
+	@cescription: Feuille de style d'écran
+	@author:      remi (exomel.com)
+	@updated:	  20090704
+
+	@notes:       Vous pouvez vous servir de ce fichier
+	              pour créer un nouveau thème pour
+				  Pubwich.
+
+******************************************************/
+
+/**
+ *	Basic
+ ******************************************************************/
+
+@import url(reset.css);
+
+.clearfix:after { content: "."; display: block; height: 0; clear: both; visibility: hidden; } .clearfix {display: inline-block;}
+/* Hides from IE-mac \*/ * html .clearfix {height: 1%;} .clearfix {display: block;} /* End hide from IE-mac */
+
+hr { display: none; } 
+a * { cursor: pointer; }
+
+html {
+	font-size: 62.5%;
+}
+
+body {
+	background: #B7B7B7;
+	/* color: #699787; */
+	color: #000;
+	font-size: 110%;
+	line-height: 1.4;
+	font-family: 'Segoe UI', Helvetica, Arial, "Lucida Grande", "Liberation Sans", Tahoma, Verdana, sans-serif;
+				 /* Yay for Liberation! */
+	padding: 40px 0 10px;
+}
+
+#wrap {
+	font-size: 110%;
+	width: 960px;
+	margin: 0 auto;
+}
+
+#skip {
+	position: absolute;
+	left: -999px;
+}
+
+a {
+	color: #444444;
+	text-decoration: none;
+	border-bottom: 1px dotted;
+}
+
+a:hover {
+	color: #62593d;
+	border-color: #62593d;
+}
+
+acronym, abbr {
+	cursor: help;
+}
+
+h1 {
+	font-size: 320%;
+	font-weight: bold;
+	text-align: center;
+	padding-top: 0.1em;
+	padding-bottom: 1.2em;
+	width: 100%;
+	color: #9e9473;
+	letter-spacing: -0.02em;
+}
+
+h1 a {
+	border: none;
+	color: white;
+}
+
+h1 a:hover {
+	color: white;
+}
+
+.erreur {
+	background: #fff;
+	opacity: 0.2;
+	padding: 8px 10px;
+}
+
+/**
+ *	Pied de page
+ ******************************************************************/
+ 
+#footer {
+	text-align: center;
+	padding: 1.3em 0 1.9em;
+}
+
+#footer a.pubwich {
+	background: url("img/pubwich.png") no-repeat;
+	padding: 2px 1px 2px 17px;
+	border: none;
+}
+
+/**
+ *	Colonnes
+ ******************************************************************/
+ 
+.col1 {
+	width: 337px;
+	margin-right: 20px;
+	float: left;
+}
+
+.col2 {
+	width: 358px;
+	margin-right: 20px;
+	float: left;
+}
+
+.col3 {
+	width: 225px;
+	float: left;
+}
+
+/**
+ * Boites
+ ******************************************************************/
+ 
+.boite {
+	margin: 0 0 18px;	
+}
+
+.boite.nodata {
+	opacity: 0.5;
+}
+
+.boite h2 {
+	font-size: 130%;
+	padding: 8px 10px 8px;
+	color: white;
+	background: #5AC1F4;
+	line-height: 1;
+	margin-bottom: 3px;
+	line-height: 16px;
+}
+
+.boite h2 span {
+	font-size: 80%;
+	font-weight: normal;
+}
+
+.boite h2 a {
+	text-decoration: none;
+	border: none;
+	color:white;
+	text-decoration: none;
+	border-bottom:1px dotted;
+}
+
+.boite ul li {
+	margin-bottom: 5px;
+}
+
+.boite ul li.nodata {
+	opacity: 0.5;
+}
+
+.boite .boite-inner {
+	padding: 10px;
+	background: #fdfdfd;
+}
+
+.boite.no-title h2 {
+	display: none;
+}
+
+/**
+ *	Text box
+ ******************************************************************/
+
+.text .boite-inner {
+	padding-bottom: 1px;
+}
+
+.text .boite-inner p {
+	margin: 0 0 1em;
+}
+
+/**
+ *	RSS & Atom
+ ******************************************************************/
+
+.rss li, .atom li {
+	padding: 2px 5px 2px 5px;
+}
+
+/**
+ *	Flickr
+ ******************************************************************/
+
+.flickr h2
+{
+	background: white;
+	color:#444;
+}
+.flickr h2 a
+{
+	color:#5AC1F4;
+}
+
+.flickr h2 em {
+	color: #FF0084;
+	font-style: normal;
+}
+
+.flickr ul li {
+	float: left;
+	padding-right: 5px;
+	background: none;
+}
+
+.flickr ul li.derniere {
+	padding-right: 0;
+}
+
+.flickr ul li a {
+	border: none;
+}
+
+.flickr ul li img {
+	display: block;
+}
+
+/**
+ *	Twitter
+ ******************************************************************/
+.twitter h2
+{
+	background: white;
+	color:#444;
+}
+.twitter h2 a
+{
+	color:#5AC1F4;
+}
+ 
+.twitter li {
+	padding: 3px 10px 4px;
+	margin: 0 0 5px;
+}
+
+.twitter li span.image, 
+.twitter li span.date {
+	display: block;
+	float: left;
+	width: 85px;
+	margin-right: 10px;
+}
+
+.twitter li span.image {
+	width: 48px;
+}
+
+.twitter li span.image a, 
+.twitter li span.date a {
+	text-decoration: none;
+	border: none;
+}
+
+.twitter li p {
+	display: block;
+	margin-left: 95px;
+}
+
+.twitter li em.from {
+	display: none;
+}
+
+.twittersearch li p {
+	margin-left: 65px;
+}
+
+.twittersearch li p.date {
+	margin-top: 3px;
+	color: rgba(0,0,0,0.4);
+}
+
+.twittersearch li p.date a {
+	color: rgba(0,0,0,0.4);
+	border-bottom: none;
+}
+/**
+ *	WTF (aussi appelé "intro")
+ ******************************************************************/
+
+.wtf {
+	margin-bottom: 0;
+}
+
+.wtf div {
+	padding: 5px;
+}
+
+.wtf p {
+	margin: 0 0 1em;
+}
+
+/**
+ *	Crédits
+ ******************************************************************/
+ 
+.credits p {
+	padding: 5px;
+	margin: 0 0 0.3em;
+}
+
+.credits a.pubwich {
+}
+
+.credits a.pubwich strong {
+}
