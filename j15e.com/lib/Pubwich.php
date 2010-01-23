@@ -118,7 +118,7 @@
 
 					list( $name, $variable, $config ) = $service;
 					$service_instance = strtolower( $name . '_' . $variable );
-					${$service_instance} = Pubwich::loadService( $name, $config );
+					${$service_instance} = Pubwich::loadService( ucfirst($name), $config );
 					${$service_instance}->setVariable( $variable );
 					self::$classes[] = ${$service_instance};
 					self::$columns[$columnCounter][] = &${$service_instance};
