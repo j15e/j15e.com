@@ -147,7 +147,40 @@
 				require( self::getThemePath()."/functions.php" );
 				self::applyTheme();
 			}
+			ob_start();
+			ob_implicit_flush(0);
 			$tpl->display('index.tpl.php');
+			if(headers_sent())
+			{
+		        $encoding = false;
+		    }
+		    elseif( strpos($_SERVER["HTTP_ACCEPT_ENCODING"], 'x-gzip') !== false )
+		    {
+		        $encoding = 'x-gzip';
+		    }
+		    elseif( strpos($_SERVER["HTTP_ACCEPT_ENCODING"],'gzip') !== false )
+		    {
+		        $encoding = 'gzip';
+		    }
+		    else
+		    {
+		        $encoding = false;
+		    }	
+		    if($encoding)
+		    {
+		        $contents = ob_get_contents();
+		        ob_end_clean();
+		        header('Content-Encoding: '.$encoding);
+		        print("\x1f\x8b\x08\x00\x00\x00\x00\x00");
+		        $size = strlen($contents);
+		        $contents = gzcompress($contents, 5);
+		        $contents = substr($contents, 0, $size);
+		        print($contents);
+		    }
+		    else
+		    {
+		        ob_end_flush();
+		    }
 		}
 
 		/**
