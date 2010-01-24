@@ -18,7 +18,7 @@
 		{
 			$this->config = $config;
 			$this->setURLTemplate( sprintf( 'http://readitlaterlist.com/users/%s/feed/', $config['username'] ) );
-			$this->setItemTemplate('<li class="clearfix state{%state%}"><span class="date">{%time_updated%}</span> <p><a target="_blank" href="{%url%}">{%title%}</a></p></li>');
+			$this->setItemTemplate('<li class="clearfix state{%state%}"><a target="_blank" href="{%url%}">{%title%}</a></li>');
 			parent::__construct( $config );
 		}
 
