@@ -1,0 +1,2 @@
+RewriteCond %{HTTP_HOST} ^www.j15e.com [NC]
+RewriteRule ^(.*)$ http://j15e.com/$1 [L,R=301]
