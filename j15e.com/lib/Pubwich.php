@@ -147,7 +147,6 @@
 				require( self::getThemePath()."/functions.php" );
 				self::applyTheme();
 			}
-
 			$tpl->display('index.tpl.php');
 		}
 
@@ -303,7 +302,7 @@
 			foreach ( self::$classes as $class ) {
 				$link = $class->getHeaderLink();
 				if ( $link ) {
-					$output .= '		<link rel="alternate" title="'.$class->title.' - '.$class->description.'" href="'.htmlspecialchars( $link['url'] ).'" type="'.$link['type'].'">'."\n";
+					$output .= '		<link rel="alternate" title="'.$class->title.' - '.$class->description.'" href="'.htmlspecialchars( $link['url'] ).'" type="'.$link['type'].'"/>'."\n";
 				}
 			}
 			return $output;

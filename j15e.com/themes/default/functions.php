@@ -8,6 +8,7 @@
 					<ul class="clearfix">
 						{%items%}
 					</ul>
+					<div class="clearfix"></div>
 				</div>
 			</div>
 	';

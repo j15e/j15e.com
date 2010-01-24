@@ -109,7 +109,7 @@ by Minify. E.g. <code>@import "<span class=minRoot>/min/?</span>g=css2";</code><
 
 </div><!-- #app -->
 
-<hr>
+<hr/>
 <p>Need help? Search or post to the <a class=ext 
 href="http://groups.google.com/group/minify">Minify discussion list</a>.</p>
 <p><small>This app is minified :) <a class=ext 
