@@ -3,30 +3,30 @@
 
 	/**
 	 * @classname Service
-	 */ 
+	 */
 	class Service {
 
-		public $data, $cache_id, $cache_options, $title, $description, $urlTemplate, $username, $total, $method, $callback_function, $header_link;
+		public $data, $cache_id, $cache_options, $title, $description, $urlTemplate, $username, $total, $method, $callback_function, $header_link, $http_headers;
 		private $url, $itemTemplate, $tmpTemplate, $boxTemplate, $tmpBoxTemplate;
 
 		/**
 		 * @constructor
-		 */ 
+		 */
 		public function __construct( $config=null ) {
 			PubwichLog::log( 2, sprintf( Pubwich::_("Creating an instance of %s"), get_class( $this ) ) );
 
 			$this->title = $config['title'];
 			$this->description = $config['description'];
 
-			$id = md5( $this->getURL() ); 
-			$this->cache_id = $id; 
+			$id = md5( $this->getURL() );
+			$this->cache_id = $id;
 
 			if ( !$this->callback_function ) {
 				$this->callback_function = 'simplexml_load_string';
 			}
 
-			$this->cache_options = array( 
-				'cacheDir' => CACHE_LOCATION, 
+			$this->cache_options = array(
+				'cacheDir' => CACHE_LOCATION,
 				'lifeTime' => CACHE_LIMIT,
 				'readControl' => true,
 				'readControlType' => 'strlen',
@@ -73,7 +73,7 @@
 		/**
 		 * @param string $url
 		 * @return Service
-		 */ 	
+		 */
 		public function init() {
 			PubwichLog::log( 2, sprintf( Pubwich::_("Initializing instance of %s"), get_class( $this ) ) );
 			$url = $this->getURL();
@@ -81,7 +81,10 @@
 
 			if ($data = $Cache_Lite->get( $this->cache_id) ) {
 				libxml_use_internal_errors( true );
-				$this->data = call_user_func( $this->callback_function, $data );
+				$this->data = $data;
+				if ( is_string( $data ) ) {
+					$this->data = call_user_func( $this->callback_function, $this->data );
+				}
 				libxml_clear_errors();
 			}
 			else {
@@ -101,14 +104,18 @@
 				$Cache_Lite = new Cache_Lite( $this->cache_options );
 				$Cache_Lite->get( $this->cache_id );
 			}
-			$content = FileFetcher::get( $url );
+			if ( !$this->callback_getdata ) {
+				$content = FileFetcher::get( $url, $this->http_headers );
+			} else {
+				$content = call_user_func( $this->callback_getdata[0], $this->callback_getdata[1] );
+			}
 			if ( $content !== false ) {
 				$cacheWrite = $Cache_Lite->save( $content );
-				if ( PEAR::isError($cacheWrite) ) {
-					/*var_dump( $cacheWrite->getMessage() );*/
-				}
 				libxml_use_internal_errors( true );
-				$this->data = call_user_func( $this->callback_function, $content );
+				$this->data = $content;
+				if ( is_string( $this->data ) ) {
+					$this->data = call_user_func( $this->callback_function, $this->data );
+				}
 			} else {
 				$this->data = false;
 			}
@@ -116,7 +123,7 @@
 
 		/**
 		 * @return string
-		 */	
+		 */
 		public function getData() {
 			return $this->data;
 		}
@@ -169,7 +176,7 @@
 		public function setBoxTemplate( $template ) {
 			if ( !$this->boxTemplate ) {
 				$this->tmpBoxTemplate = $template;
-			} else {	
+			} else {
 				$this->boxTemplate->setTemplate( $template );
 			}
 		}
@@ -194,7 +201,6 @@
 		}
 
 		/*
-		 * @param Service &$classe
 		 * @return string
 		 */
 		public function renderBox( ) {
@@ -209,7 +215,7 @@
 			} else {
 				foreach( $classData as $item ) {
 					$compteur++;
-					if ($this->total && $compteur > $this->total) { break; }  
+					if ($this->total && $compteur > $this->total) { break; }
 					$populate = $this->populateItemTemplate( $item );
 
 					if ( function_exists( get_class( $this ) . '_populateItemTemplate' ) ) {
@@ -217,21 +223,21 @@
 					}
 
 					$this->getItemTemplate()->populate( $populate );
-					$items .= '		'.$this->getItemTemplate()->output();
+					$items .= $this->getItemTemplate()->output();
 				}
 			}
 
 			$data = array(
 				'class' => $htmlClass,
-				'items' => $items	
+				'items' => $items
 			);
 
 			// Let the service override it
-			$data = $this->populateBoxTemplate() + $data;
+			$data = $this->populateBoxTemplate( $data ) + $data;
 
 			// Let the theme override it
 			if ( function_exists( 'populateBoxTemplate' ) ) {
-				$data = call_user_func( 'populateBoxTemplate', $this ) + $data;
+				$data = call_user_func( 'populateBoxTemplate', $this, $data ) + $data;
 			}
 
 			$this->getBoxTemplate()->populate( $data );

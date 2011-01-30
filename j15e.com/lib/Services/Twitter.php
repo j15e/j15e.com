@@ -9,15 +9,17 @@
 	 * @methods TwitterUser TwitterSearch
 	 */
 
+	require_once( dirname(__FILE__) . '/../OAuth/OAuth.php' );
 	class Twitter extends Service {
 
-		public $auth;
+		private $oauth;
 
 		/**
 		 * @constructor
 		 */
 		public function __construct( $config ) {
 			parent::__construct( $config );
+			$this->callback_function = array(Pubwich, 'json_decode');
 		}
 
 		/**
@@ -25,7 +27,7 @@
 		 * @return void
 		 */
 		public function setVariables( $config ) {
-			$this->auth = $config['authenticate'] ? $config['username'].':'.$config['password'].'@' : '';
+			$this->oauth = $config['oauth'];
 		}
 
 		/**
@@ -34,7 +36,8 @@
 		public function filterContent( $text ) {
 			$text = strip_tags( $text );
 			$text = preg_replace( '/(https?:\/\/[^\s\)]+)/', '<a href="\\1">\\1</a>', $text );
-			$text = preg_replace( '/\@([^\s\ \:\.\;\-\,\!\)\(\"]+)/', '@<a href="http://twitter.com/\\1">\\1</a>', $text );
+			$text = preg_replace( '/(^|\s)\#([^\s\ \:\.\;\-\,\!\)\(\"]+)/', '\\1<a href="https://search.twitter.com/search?q=%23\\2">#\\2</a>', $text );
+			$text = preg_replace( '/(^|\s)\@([^\s\ \:\.\;\-\,\!\)\(\"]+)/', '\\1@<a href="https://twitter.com/\\2">\\2</a>', $text );
 			$text = '<p>' . $text . '</p>';
 			return $text;
 		}
@@ -47,19 +50,31 @@
 						'source' => $item->source,
 						);
 		}
+
+		public function oauthRequest( $params=array() ) {
+			$method = $params[0];
+			$additional_params = isset( $params[1] ) ? $params[1] : array();
+			$base = $params[2] ? $params[2] : "http://api.twitter.com/1/";
+
+			$sha1_method = new OAuthSignatureMethod_HMAC_SHA1();
+			$consumer = new OAuthConsumer( $this->oauth['app_consumer_key'], $this->oauth['app_consumer_secret'] );
+			$token = new OAuthConsumer( $this->oauth['user_access_token'], $this->oauth['user_access_token_secret'] );
+
+			$request = OAuthRequest::from_consumer_and_token($consumer, $token, 'GET', $base.$method.'.json', $additional_params);
+			$request->sign_request($sha1_method, $consumer, $token);
+
+			return FileFetcher::get($request->to_url());
+		}
+
 	}
 
 	class TwitterUser extends Twitter {
 
-		public function getData() {
-			$data = parent::getData();
-			return $data->status;
-		}
-
 		public function __construct( $config ) {
 			parent::setVariables( $config );
 
-			$this->setURL( sprintf( 'http://'.$this->auth.'twitter.com/statuses/user_timeline/%s.xml?count=%d', $config['id'], $config['total'] ) );
+			$this->callback_getdata = array( array($this, 'oauthRequest'), array( 'statuses/user_timeline', array('count'=>$config['total']) ) );
+			$this->setURL('http://twitter.com/'.$config['username'].'/'.$config['total']);
 			$this->username = $config['username'];
 			$this->setItemTemplate('<li class="clearfix"><span class="date"><a href="{%link%}">{%date%}</a></span>{%text%}</li>'."\n");
 			$this->setURLTemplate('http://www.twitter.com/'.$config['username'].'/');
@@ -74,34 +89,28 @@
 					'user_name' => $item->user->name,
 					'user_nickname' => $item->user->screen_name,
 					'user_link' => sprintf( 'http://www.twitter.com/%s/', $item->user->screen_name ),
+					'in_reply_to_screen_name' => $item->in_reply_to_screen_name,
 			);
 		}
-
 
 	}
 
 	class TwitterSearch extends Twitter {
 
-		public function getData() {
-			$data = parent::getData();
-			return $data->results;
-		}
-
 		public function __construct( $config ) {
 			parent::setVariables( $config );
 
-			$this->setURL( sprintf( 'http://'.$this->auth.'search.twitter.com/search.json?q=%s&rpp=%d', $config['terms'], $config['total'] ) );
+			$this->callback_getdata = array( array($this, 'oauthRequest'), array( 'search', array('q'=>$config['terms'], 'rpp'=>$config['total'], 'result_type'=>'recent' ), "http://search.twitter.com/" ) );
+			$this->setURL('http://search.twitter.com/'.$config['terms'].'/'.$config['total']);
 			$this->setItemTemplate( '<li class="clearfix"><span class="image"><a href="{%user_link%}"><img width="48" src="{%user_image%}" alt="{%user_nickname%}" /></a></span>{%text%}<p class="date"><a href="{%link%}">{%date%}</a></p></li>'."\n" );
 			$this->setURLTemplate( 'http://search.twitter.com/search?q='.$config['terms'] );
 
-			if ( !function_exists( 'json_decode' ) ) {
-				// only include the zend_json library if php json support is not enabled (php < 5.2)
-				require_once( dirname(__FILE__) . '/../Zend/Json.php' );
-			}
-
-			$this->callback_function = array(Pubwich, 'json_decode');
-
 			parent::__construct( $config );
+		}
+
+		public function getData() {
+			$data = parent::getData();
+			return $data->results;
 		}
 
 		public function populateItemTemplate( &$item ) {
