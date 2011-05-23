@@ -1,0 +1,1 @@
+*/15 * * * * php -f /home/j15e/www/j15e/j15e.com/cron/cron.php
