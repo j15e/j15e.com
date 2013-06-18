@@ -58,7 +58,7 @@ p{margin:0
 p{padding:5px;margin:0
 0 0.3em}.credits
 a.pubwich{}.credits a.pubwich
-strong{}
+strong{}#intro p{margin-bottom: 12px}
 </style>
 <?php echo Pubwich::getHeader() ?>
 	</head>

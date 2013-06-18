@@ -24,13 +24,22 @@
 		array(
 			array(
 				array( 'Text', 'intro', array(
-						'title' => 'À propos',
-						'text' => '<p>Bonjour! Je suis Jean-Philippe Doyle, chargé de projet et développeur web. J\'ai développé depuis plusieurs années une expertise pour le développement web à travers ma participation à des projets et des entreprises dans ce domaine. Je travaille présentement avec ma superbe équipe chez <a href="http://www.hooktstudios.com" target="_blank">Hookt Studios</a>, dans la magnifique basse ville de Québec. Au plaisir d\'échanger avec vous!</p>
-						',
+            'title' => 'À propos',
+            'text' => '<p>Bonjour!</p>
+                <p>Disclamer : ce site est vieux et laid et date de
+                <a href="https://github.com/j15e/j15e.com/commit/fede215be36345286b2a42768a9583e037b80f1f" target="_blank">2009</a>.</p>
+                <p>Je suis Jean-Philippe Doyle, développeur web ruby et entrepreneur.
+                J\'ai développé depuis plusieurs années une expertise pour le développement web à travers ma
+                participation à des projets et des entreprises dans ce domaine. Je travaille présentement avec
+                ma superbe équipe chez <a href="http://www.hooktstudios.com" target="_blank">Hookt Studios</a>,
+                dans la magnifique basse ville de Québec.</p>
+                <p>Au plaisir d\'échanger avec vous!</p>
+                <p><a href="http://b.j15e.com">Suivez également mes articles en anglais ›</a></p>
+            ',
 					)
 				),
 
-				array( 'Flickr', 'photos', array( 
+				array( 'Flickr', 'photos', array(
 						'method' => 'FlickrUser',
 						'key' => '',
 						'userid' => '', // use http://www.idgettr.com to find it
@@ -40,8 +49,8 @@
 						'description' => 'dernières photos',
 						'row' => 4,
 					)
-				),				
-				
+				),
+
 				array( 'Text', 'links3', array(
 						'title' => 'Sur mon iPhone',
 						'description'=>'mes app favorites',
@@ -53,8 +62,8 @@
 	<a target="_blank" href="http://itunes.apple.com/fr/app/wunderlist/id406644151?mt=8">Wunderlist</a><br>
   </p>
 '					)
-				),						
-				
+				),
+
 				array( 'Text', 'links5', array(
 						'title' => 'Sur mon iPad',
 						'description'=>'mes app favorites',
@@ -66,18 +75,18 @@
 	Safari :) <br>
   </p>
 '					)
-				),				
+				),
 				/*
 array( 'Text', 'links4', array(
 						'title' => 'Des projets',
 						'description' => 'survol de mes projets',
-						'text' => 
+						'text' =>
 				'
-				
-<h3>2011</h3>	
+
+<h3>2011</h3>
 <a target="_blank" href="http://www.webaquebec.org/ironweb/">Iron Web au Web à Québec</a>
 <h3>2010</h3>
-<a target="_blank" href="http://www.tiragephoto.ma">TiragePhoto.ma</a>, 
+<a target="_blank" href="http://www.tiragephoto.ma">TiragePhoto.ma</a>,
 <a target="_blank" href="http://mo.hooktstudios.com">Movember Hookt</a>
 <h3>2009</h3>
   <a target="_blank" href="http://www.hooktstudios.com">Hookt Studios</a>,
@@ -95,10 +104,10 @@ array( 'Text', 'links4', array(
     <a target="_blank" href="http://www.garneautravail.com">Garneau Travail Inc.</a>,
     <a target="_blank" href="http://www.constructionbdm.com">Construction  BDM inc. </a>,
 	<a target="_blank" href="http://www.indea.ca">INdéa inc. </a>,
-    <a target="_blank" href="http://www.od2007.org">OD 2007</a>  
+    <a target="_blank" href="http://www.od2007.org">OD 2007</a>
   <h3>2006</h3>
     <a target="_blank" href="http://www.defiez.com">Defiez.com</a>
-    <a target="_blank" href="http://www.christophepratiffi.com"> Christophe 
+    <a target="_blank" href="http://www.christophepratiffi.com"> Christophe
       Pratiffi : Guitare Classique</a>
     <a target="_blank" href="http://www.pbr.creationkjp.com/HTML/">Pabst Blue
       Ribbon</a>,
@@ -106,21 +115,21 @@ array( 'Text', 'links4', array(
     Eberleen 3,
       Monster Up,
       Pascal Pierre Paillé
-  
+
   <h3>2005</h3>
 	District Seven Distribution,
     Service d\'entretient P.A.
-  
+
   <h3>2004</h3>
   MaxiGames.net
   Fruits et Légumes Beauport
-  
-  <h3>2003</h3> 
+
+  <h3>2003</h3>
     <a target="_blank" href="http://www.traiteurlionelriverin.com">Traiteur Lionel Riverin</a>,
     <a target="_blank" href="http://www.webfolio3.devdoyle.com">WebFolio</a> (Création KJP SENC)
   ')),
 */
-				
+
 			),
 			array(
 				array( 'Twitter', 'etats', array(
@@ -169,7 +178,7 @@ array( 'Text', 'links4', array(
 	<a href="http://www.espressotec.com" target="_blank">EspressoTec</a> machines espresso<br/>
 </p>
 '
-	)),				
+	)),
 				array( 'Text', 'links2', array(
 						'title' => 'Développement web',
 						'description' => '<br/>quelques-uns de mes sites et logiciels favoris',
