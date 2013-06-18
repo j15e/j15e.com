@@ -1,5 +1,5 @@
 <?php echo '<?xml version="1.0" encoding="UTF-8"?>';?>
-<!DOCTYPE html 
+<!DOCTYPE html
      PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
@@ -74,7 +74,7 @@ strong{}
 			<div id="footer">
 				<div class="footer-inner">
 					<hr/>
-					<?php echo sprintf( 'Propulsé fièrement par  %s.', '<a class="pubwich" href="http://pubwich.org/">Pubwich</a>'  )?>
+					<?php echo sprintf( 'Propulsé fièrement par  %s.', '<a class="pubwich" href="https://github.com/remiprev/pubwich">Pubwich</a>'  )?>
 				</div>
 			</div>
 		</div>
