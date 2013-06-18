@@ -54,7 +54,7 @@
 		public function oauthRequest( $params=array() ) {
 			$method = $params[0];
 			$additional_params = isset( $params[1] ) ? $params[1] : array();
-			$base = $params[2] ? $params[2] : "http://api.twitter.com/1/";
+			$base = $params[2] ? $params[2] : "http://api.twitter.com/1.1/";
 
 			$sha1_method = new OAuthSignatureMethod_HMAC_SHA1();
 			$consumer = new OAuthConsumer( $this->oauth['app_consumer_key'], $this->oauth['app_consumer_secret'] );
